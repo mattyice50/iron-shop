@@ -27,7 +27,7 @@
               %li= link_to "Post Item", new_item_path
 
             - if can? :manage, :cart
-              %li.biggercart= link_to "", cart_path, class: "glyphicon glyphicon-shopping-cart"
+              %li.biggercart= link_to "", carts_path, class: "glyphicon glyphicon-shopping-cart"
 
             %li= link_to current_user.email, edit_user_registration_path
             %li= link_to "Log out", destroy_user_session_path, method: :delete

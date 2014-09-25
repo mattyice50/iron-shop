@@ -3,9 +3,6 @@
     = @item.title
     %small= "$#{@item.price}"
     .pull-right
-      -if can? :manage, :cart
-        %button.btn.btn-default
-          =link_to "Add to Cart", cart_add_path(id: @item)
       -if can? :manage, :items
         %small
           =link_to "Edit", edit_item_path
