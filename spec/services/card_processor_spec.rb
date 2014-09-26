@@ -1,31 +1,27 @@
+require 'rails_helper'
+
 describe CardProcessor do
   before :each do
     @invoice = create :invoice
   end
 
-  it 'marks the invoice as paid' do
-    token = Stripe::Token.create(card: {
-      number:    '4242424242424242',
-      exp_month: 1,
-      exp_year:  2015,
-      cvc:       '777'
-    })
+  it "can remeber a previous customer" do
+    @user = create :user
+    processor = CardProcessor.new @invoice, CardProcessor.valid_card
+    @invoice.shopper = @user
+    stripe_user = processor.get_Stripe_customer @user
+    expect( stripe_user ).to match processor.get_Stripe_customer @user
+  end
 
-    processor = CardProcessor.new @invoice, token.id
+  it 'marks the invoice as paid' do
+    processor = CardProcessor.new @invoice, CardProcessor.valid_card
     processor.process
 
     expect( @invoice.paid? ).to be true
   end
 
   it 'handles declined cards' do
-    token = Stripe::Token.create(card: {
-      number:    '4000000000000002',
-      exp_month: 1,
-      exp_year:  2015,
-      cvc:       '112'
-    })
-
-    processor = CardProcessor.new @invoice, token.id
+    processor = CardProcessor.new @invoice,  CardProcessor.declined_card
     expect do
       processor.process
     end.to raise_error CardProcessor::ProcessingError
