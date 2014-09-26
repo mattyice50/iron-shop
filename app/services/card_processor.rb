@@ -7,7 +7,8 @@ class CardProcessor
 
   def process
     begin
-      @customer = create_Stripe_customer
+      @customer = get_Stripe_customer @invoice.shopper
+      ## apply_coupon 
       process_charge! @customer
     rescue Stripe::CardError => e
       raise ProcessingError, e.message
@@ -15,11 +16,17 @@ class CardProcessor
     note_payment
   end
 
-  def create_Stripe_customer
-    customer = Stripe::Customer.create(
-      :email => @invoice.shopper.email,
-      :card  => @token
-    )
+  def get_Stripe_customer shopper
+    unless shopper.payment_info.nil?
+      customer = Stripe::Customer.retrieve( shopper.payment_info )
+    else
+      customer = Stripe::Customer.create(
+          :email => @invoice.shopper.email,
+          :card  => @token
+        )
+      shopper.payment_info = customer.id
+      customer
+    end
   end
 
   def process_charge! customer

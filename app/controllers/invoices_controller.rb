@@ -11,6 +11,6 @@ class InvoicesController < ApplicationController
     rescue CardProcessor::ProcessingError => e
       flash[:error] = e.message
     end
-    redirect_to: @invoice
+    redirect_to @invoice
   end
 end

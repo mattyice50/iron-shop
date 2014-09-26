@@ -11,24 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140923182514) do
+ActiveRecord::Schema.define(version: 20140926012615) do
 
-  create_table "carts", force: true do |t|
-    t.integer "shopper_id"
-    t.decimal "tax_rate", precision: 7, scale: 2, default: 0.04, null: false
-  end
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "cart_items", force: true do |t|
     t.integer "cart_id"
     t.integer "item_id"
   end
 
+  create_table "carts", force: true do |t|
+    t.integer "shopper_id"
+    t.decimal "tax_rate",   precision: 7, scale: 2, default: 0.04, null: false
+  end
+
+  create_table "invoice_items", force: true do |t|
+    t.integer  "invoice_id"
+    t.integer  "item_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "invoices", force: true do |t|
-    t.decimal  "amount",      precision: 7, scale: 2
+    t.decimal  "amount",     precision: 7, scale: 2
     t.integer  "shopper_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "paid",       default: false
+    t.boolean  "paid",                               default: false
   end
 
   create_table "items", force: true do |t|
@@ -36,13 +46,6 @@ ActiveRecord::Schema.define(version: 20140923182514) do
     t.text     "description"
     t.decimal  "price",       precision: 7, scale: 2
     t.integer  "seller_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "invoice_items", force: true do |t|
-    t.integer  "invoice_id"
-    t.integer  "item_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -63,10 +66,10 @@ ActiveRecord::Schema.define(version: 20140923182514) do
     t.boolean  "admin",                  default: false
     t.boolean  "shopper",                default: true
     t.boolean  "seller",                 default: false
+    t.string   "payment_info"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
