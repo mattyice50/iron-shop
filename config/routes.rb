@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => {:registrations => "registrations"}
   resources :items, except: [:index]
 
-
+  post '/changerole' => 'changerole#update'
 
   get '/cart', to: 'carts#show'
   get '/cart/add', to: 'carts#add'
