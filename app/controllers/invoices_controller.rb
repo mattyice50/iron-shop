@@ -8,6 +8,7 @@ class InvoicesController < ApplicationController
     begin
       CardProcessor.new( @invoice, params[:stripeToken] ).process
       flash[:success] = "Your payment was processed successfully"
+      current_user.carts.first.clean
     rescue CardProcessor::ProcessingError => e
       flash[:error] = e.message
     end

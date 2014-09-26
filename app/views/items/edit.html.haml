@@ -1,7 +1,9 @@
-= form_for(@item, class: "form") do |p|
+= form_for(@item, :html => { :multipart => true }, class: "form") do |p|
   .form-group
     =p.label :title
     =p.text_field :title, class: "form-control"
+  .form-group
+    =p.file_field :avatar
   .form-group
     =p.label :description
     =p.text_area :description, class: "form-control", rows: 6
@@ -9,4 +11,7 @@
     =p.label :price
     =p.text_field :price, placeholder: '0.00', class: "form-control"
 
-  =p.submit
+  =p.submit "Update Item", {:class => "btn btn-default"}
+
+:javascript
+  bkLib.onDomLoaded(nicEditors.allTextAreas);

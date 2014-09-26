@@ -4,21 +4,30 @@
     %small
       = "for #{current_user.email}"
 
-%table.table.table-striped
-  %thead
-    %tr
-      %th Item
-      %th Price
-      %th Seller
-      %th
-  %tbody
-  -@cart.items(include: :seller).each do |item|
-    %tr
-      %td= item.title
-      %td= item.price
-      %td= item.seller.email
-      %td= link_to "Remove Items", cart_remove_path(id: item.id)
+- if @cart.items.empty?
+  %br
+  %br
+  .jumbotron
+    %h1 Your Cart Is Empty!
+    %p Follow this link here to find some products
+    %p.btn.btn-primary=link_to "Click Me", root_path, :style => 'color: #FFF;'
 
-%br
-%hr
-%button.btn.btn-default= link_to "Check Out!", cart_checkout_path
+- else
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Item
+        %th Price
+        %th Seller
+        %th
+    %tbody
+    -@cart.items(include: :seller).each do |item|
+      %tr
+        %td= item.title
+        %td= item.price
+        %td= item.seller.email
+        %td= link_to "Remove Items", cart_remove_path(id: item.id)
+
+  %br
+  %hr
+  %button.btn.btn-default= link_to "Check Out!", cart_checkout_path

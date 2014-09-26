@@ -36,4 +36,9 @@ class Cart < ActiveRecord::Base
     invoice.amount = self.total
     invoice
   end
+
+  def clean
+    items = self.cart_items
+    items.delete_all
+  end
 end

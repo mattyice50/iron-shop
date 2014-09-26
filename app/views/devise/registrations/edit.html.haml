@@ -1,5 +1,27 @@
 %h2
+  Change Role
+%br
+
+- if current_user.shopper?
+  %input{ type: "hidden", id: "role", value: "shopper" }
+- elsif current_user.seller?
+  %input{ type: "hidden", id: "role", value: "seller" }
+
+.text-center
+  = form_tag changerole_path, method: :post, class: "btn-group" do
+    %label.btn.btn-default
+      %input{ type: "radio", name: "role", value: "shopper", id: "shopper" }
+        Shopping
+    %label.btn.btn-default
+      %input{ type: "radio", name: "role", value: "seller", id: "seller" }
+        Selling
+    %button.btn.btn-primary.pull-right Done
+%br
+%hr
+
+%h2
   Edit #{resource_name.to_s.humanize}
+%br
 = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, class: "form") do |f|
   = devise_error_messages!
   .form-group
@@ -17,9 +39,22 @@
   .form-group
     = f.label :current_password
     = f.password_field :current_password, autocomplete: "off", class: "form-control"
-  = f.submit "Update", class: "btn btn-primary"
+  = f.submit "Update", class: "btn btn-primary pull-right"
+  %br
+  %hr
 
 %h3 Cancel my account
 %p
   Unhappy? #{button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, class: "btn btn-danger", method: :delete}
 = link_to "Back", :back
+
+
+:javascript
+  $(function() {
+    var role = document.getElementById("role").value;
+    if(role === "shopper"){
+      $('#shopper').prop("checked", true);
+    } else if(role === "seller") {
+      $('#seller').prop("checked", true);
+    }
+  });

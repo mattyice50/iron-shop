@@ -15,6 +15,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'pg'
 gem 'pg_search'
 
+gem "paperclip", "~> 4.2"
+gem 'aws-sdk'
+
+
 gem 'devise'
 gem 'devise-async'
 gem 'cancancan'

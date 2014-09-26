@@ -27,8 +27,8 @@ class ItemsController < ApplicationController
 
 
   def edit
-    if current_user[:id] = params[:seller_id]
-      @item = current_user.items.find(params[:id])
+    if (current_user[:id] = params[:seller_id]) || (current_user.admin?)
+      @item = Item.find(params[:id])
     else
       redirect_to :back, :alert => "You do not have permission to edit this item."
     end
@@ -36,7 +36,7 @@ class ItemsController < ApplicationController
 
   def update
     if can? :manage, :items
-      @item = current_user.items.find(params[:id])
+      @item = Item.find(params[:id])
       if @item.update! create_params
         redirect_to @item
       else
@@ -57,7 +57,7 @@ class ItemsController < ApplicationController
   private
 
   def create_params
-    params.require(:item).permit(:title, :price, :description)
+    params.require(:item).permit(:title, :price, :description, :avatar)
   end
 
 end

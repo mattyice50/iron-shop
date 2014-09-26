@@ -7,7 +7,13 @@
         %button.btn.btn-default
           =link_to "Add to Cart", cart_add_path(id: @item)
       -if can? :manage, :items
-        %small
+        %button.btn.btn-default
           =link_to "Edit", edit_item_path
+.row
+  .col-md-4
+    = image_tag @item.avatar.url(:medium), :class => "img-rounded img-responsive"
+  .col-md-8
+    %p= simple_format(@item.description)
 
-%p= @item.description
+    %br
+    %br

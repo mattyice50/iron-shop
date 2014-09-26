@@ -19,6 +19,10 @@ class Item < ActiveRecord::Base
   has_many :carts, through: :cart_items
   has_many :cart_items
 
+  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+
+
   include PgSearch
   pg_search_scope :search, against: [:title, :description],
     using: { tsearch: { dictionary: "english" } }

@@ -15,9 +15,10 @@
     %tr
       %td Total
       %td= @invoice.amount
-= form_tag close_invoice_path(@invoice) do
-  %script.stripe-button{ 'src' => 'https://checkout.stripe.com/checkout.js',
-    'data-key' => ENV['STRIPE_PUBLISHABLE_KEY'],
-    'data-name' => 'Iron Shop',
-    'data-description' => "#{@invoice.items.count} items",
-    'data-amount' => @invoice.amount_in_cents }
+-if !@invoice.paid?
+  = form_tag close_invoice_path(@invoice) do
+    %script.stripe-button{ 'src' => 'https://checkout.stripe.com/checkout.js',
+      'data-key' => ENV['STRIPE_PUBLISHABLE_KEY'],
+      'data-name' => 'Iron Shop',
+      'data-description' => "#{@invoice.items.count} items",
+      'data-amount' => @invoice.amount_in_cents }

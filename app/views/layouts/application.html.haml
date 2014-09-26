@@ -27,7 +27,11 @@
               %li= link_to "Post Item", new_item_path
 
             - if can? :manage, :cart
-              %li.biggercart= link_to "", cart_path, class: "glyphicon glyphicon-shopping-cart"
+              - current_user.carts.each do |cart|
+                %li.biggercart= link_to "", cart_path, class: "glyphicon glyphicon-shopping-cart"
+                -if cart.subtotal.to_s != "0"
+                  %li= link_to "$#{cart.subtotal.to_s}", cart_path, :style => 'color: green;'
+
 
             %li= link_to current_user.email, edit_user_registration_path
             %li= link_to "Log out", destroy_user_session_path, method: :delete
