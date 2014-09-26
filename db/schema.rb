@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20140926010316) do
     t.boolean  "admin",                  default: false
     t.boolean  "shopper",                default: true
     t.boolean  "seller",                 default: false
+    t.string   "payment_info"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
