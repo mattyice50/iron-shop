@@ -11,6 +11,8 @@ class Ability
     else
       can :read, :all
       can :manage, :cart
+      can :watch, :items
+      can :unwatch, :items
       can :read, :invoice
     end
 
