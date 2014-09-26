@@ -47,8 +47,23 @@ class ItemsController < ApplicationController
     end
   end
 
+  def watch
+    item = Item.find_by_id params[:id]
+    watcheditem = current_user.price_watches.new
+    watcheditem.item_id = params[:id]
+    watcheditem.save!
+    redirect_to item, notice: "Item watched! You will receive emails when the price changes."
 
+  end
 
+  def unwatch
+    item = Item.find_by_id params[:id]
+    pricewatch = current_user.price_watches.find item.price_watches
+
+    pricewatch.destroy
+
+    redirect_to item, flash: { warning: "Item unwatched! You will not receive emails for this item anymore." }
+  end
 
   def destroy
 

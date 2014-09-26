@@ -4,6 +4,12 @@
     %small= "$#{@item.price}"
     .pull-right
       -if can? :manage, :cart
+        - unless current_user.watcheditems.find_by_id @item.id
+          %button.btn.btn-default
+            = link_to "Follow item & Alert me", watch_item_path(id: @item), method: :post
+        - else
+          %buttone.btn.btn-default
+            = link_to "Unfollow", unwatch_item_path(id: @item), method: :post
         %button.btn.btn-default
           =link_to "Add to Cart", cart_add_path(id: @item)
       -if can? :manage, :items

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140926010316) do
+ActiveRecord::Schema.define(version: 20140926144327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,11 @@ ActiveRecord::Schema.define(version: 20140926010316) do
   create_table "carts", force: true do |t|
     t.integer "shopper_id"
     t.decimal "tax_rate",   precision: 7, scale: 2, default: 0.04, null: false
+  end
+
+  create_table "carts_items", force: true do |t|
+    t.integer "cart_id"
+    t.integer "item_id"
   end
 
   create_table "invoice_items", force: true do |t|
@@ -52,6 +57,20 @@ ActiveRecord::Schema.define(version: 20140926010316) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+  end
+
+  create_table "price_watches", force: true do |t|
+    t.integer  "shopper_id"
+    t.integer  "item_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "relationships", force: true do |t|
+    t.integer  "invoice_id"
+    t.integer  "item_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

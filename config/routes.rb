@@ -5,7 +5,12 @@ Rails.application.routes.draw do
 
 
   devise_for :users, :controllers => {:registrations => "registrations"}
-  resources :items, except: [:index]
+  resources :items, except: [:index] do
+    member do
+      post :watch
+      post :unwatch
+    end
+  end
 
   post '/changerole' => 'changerole#update'
 
@@ -13,6 +18,8 @@ Rails.application.routes.draw do
   get '/cart/add', to: 'carts#add'
   get '/cart/remove', to: 'carts#remove'
   get '/cart/checkout', to: 'carts#checkout'
+
+
 
   resources :invoices, only: [:show] do
     member do

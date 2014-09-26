@@ -31,5 +31,6 @@ class User < ActiveRecord::Base
 
   has_many :carts, foreign_key: 'shopper_id'
   # has_and_belongs_to_many :invoices
-  
+  has_many :price_watches, foreign_key: 'shopper_id'
+  has_many :watcheditems, source: :item, through: :price_watches
 end
