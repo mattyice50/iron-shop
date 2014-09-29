@@ -29,6 +29,7 @@ gem 'angular-rails'
 gem 'stripe'
 
 gem 'sidekiq'
+gem 'sidetiq'
 gem 'sinatra'
 
 group :development do
