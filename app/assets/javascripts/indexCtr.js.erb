@@ -1,0 +1,28 @@
+app.controller('indexCtrl', function($scope, $resource) {
+
+  var itemResource = $resource(
+    '/items/'
+  );
+  $scope.items = itemResource.query();
+
+
+  $scope.search = function() {
+    if($scope.text) {
+      $scope.text === this.text;
+
+      var searchResource = $resource(
+        '/items/?utf8=✓&query=:query', {query: $scope.text}
+      );
+      $scope.items = searchResource.query();
+    }
+    else {
+
+      var itemResource = $resource(
+        '/items/'
+      );
+      $scope.items = itemResource.query();
+    };
+  };
+
+
+});

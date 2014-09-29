@@ -23,8 +23,9 @@ gem 'devise'
 gem 'devise-async'
 gem 'cancancan'
 
+gem 'angularjs-rails'
+
 gem 'figaro'
-gem 'angular-rails'
 
 gem 'stripe'
 

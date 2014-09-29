@@ -1,5 +1,14 @@
 class ItemsController < ApplicationController
 
+  def index
+    @items = Item.text_search(params[:query])
+    @items.each do |item|
+      item.description = item.description.strip_tags
+    end
+    render json: @items
+  end
+
+
   def show
     @item = Item.find(params[:id])
   end
