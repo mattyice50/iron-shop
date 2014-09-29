@@ -7,13 +7,15 @@ class Ability
     if user.admin
       can :manage, :all
     elsif user.seller
-      can :manage, :items
-    else
+      can :manage, @item
+    elsif user.shopper
       can :read, :all
-      can :manage, :cart
       can :watch, :items
       can :unwatch, :items
-      can :read, :invoice
+      can :manage, @cart
+      can :read, @invoice
+    else
+      can :read, @item
     end
 
     # Define abilities for the passed in user here. For example:

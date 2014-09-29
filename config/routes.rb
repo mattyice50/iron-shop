@@ -6,12 +6,14 @@ Rails.application.routes.draw do
 
 
   devise_for :users, :controllers => {:registrations => "registrations"}
+
   resources :items, except: [:index] do
     member do
       post :watch
       post :unwatch
     end
   end
+
 
   post '/changerole' => 'changerole#update'
 
