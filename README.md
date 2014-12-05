@@ -2,7 +2,7 @@
 
 ## Angular Examples
 
-  Angular app definition and controllers can be found at app/assets/javascript. We are using angular to communicate   with a JSON backend to pull data from the backend. The views using this are found in app/views/users
+  Angular app definition and controllers can be found at app/assets/javascript. We are using angular to communicate   with a JSON backend to pull data from the backend as well as full text searching. The views using this are found in app/views/static_pages/home
 
 This will be another week-long project, similar to last week's. This time, we will be building a simple storefront. Planned class topics for the week:
 
